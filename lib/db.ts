@@ -90,6 +90,7 @@ export async function getNewWords(limit: number): Promise<Word[]> {
   return db.getAllAsync<Word>(`
     SELECT * FROM words
     WHERE id NOT IN (SELECT word_id FROM user_words)
+    ORDER BY RANDOM()
     LIMIT ?
   `, [limit]);
 }

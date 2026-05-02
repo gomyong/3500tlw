@@ -2,32 +2,40 @@ import { useColorScheme } from 'react-native';
 
 export const Colors = {
   light: {
-    background: '#f8f9ff',
+    background: '#fbf9f8',
     surface: '#ffffff',
-    surfaceVariant: '#e5eeff',
-    primary: '#005648',
-    primaryContainer: '#1f6f5f',
+    surfaceContainer: '#f0eded',
+    surfaceContainerHigh: '#eae8e7',
+    primary: '#1F6F5F',
+    primaryDark: '#005648',
     onPrimary: '#ffffff',
-    text: '#0d1c2e',
+    text: '#1b1c1c',
     textSecondary: '#3f4945',
-    border: '#bec9c4',
-    borderSubtle: '#dce9ff',
-    error: '#E53E3E',
+    border: '#e4e2e1',
+    borderSubtle: '#eae8e7',
+    buttonSecondary: '#eeeeee',
+    buttonSecondaryText: '#5d5f5f',
+    error: '#ba1a1a',
     errorContainer: '#ffdad6',
+    progressTrack: '#e4e2e1',
   },
   dark: {
-    background: '#0d1c2e',
-    surface: '#162233',
-    surfaceVariant: '#1e2f45',
+    background: '#161918',
+    surface: '#1e2520',
+    surfaceContainer: '#252d29',
+    surfaceContainerHigh: '#2e3632',
     primary: '#8ad5c1',
-    primaryContainer: '#005648',
-    onPrimary: '#00201a',
-    text: '#eaf1ff',
-    textSecondary: '#bec9c4',
-    border: '#3f4945',
-    borderSubtle: '#223144',
-    error: '#ff8c8c',
+    primaryDark: '#8ad5c1',
+    onPrimary: '#003729',
+    text: '#e1e3e1',
+    textSecondary: '#8c9490',
+    border: '#3d4641',
+    borderSubtle: '#2e3632',
+    buttonSecondary: '#2a3330',
+    buttonSecondaryText: '#8c9490',
+    error: '#ffb4ab',
     errorContainer: '#93000a',
+    progressTrack: '#3d4641',
   },
 };
 
@@ -37,13 +45,13 @@ export function useTheme() {
 }
 
 export const Typography = {
-  displayLg: { fontSize: 48, fontWeight: '700' as const, letterSpacing: -0.96, lineHeight: 58 },
-  headlineLg: { fontSize: 32, fontWeight: '700' as const, letterSpacing: -0.32, lineHeight: 42 },
-  headlineMd: { fontSize: 24, fontWeight: '600' as const, letterSpacing: -0.24, lineHeight: 34 },
-  bodyLg: { fontSize: 18, fontWeight: '400' as const, letterSpacing: 0, lineHeight: 29 },
-  bodyMd: { fontSize: 16, fontWeight: '400' as const, letterSpacing: 0, lineHeight: 26 },
-  labelMd: { fontSize: 14, fontWeight: '500' as const, letterSpacing: 0.28, lineHeight: 20 },
-  labelSm: { fontSize: 12, fontWeight: '600' as const, letterSpacing: 0.36, lineHeight: 17 },
+  displayWord: { fontSize: 40, fontWeight: '700' as const, letterSpacing: -0.8, lineHeight: 48 },
+  headlineLg: { fontSize: 24, fontWeight: '600' as const, letterSpacing: -0.24, lineHeight: 32 },
+  headlineMd: { fontSize: 20, fontWeight: '500' as const, letterSpacing: -0.2, lineHeight: 28 },
+  bodyLg: { fontSize: 18, fontWeight: '400' as const, letterSpacing: 0, lineHeight: 28 },
+  bodyMd: { fontSize: 16, fontWeight: '400' as const, letterSpacing: 0, lineHeight: 24 },
+  labelMd: { fontSize: 13, fontWeight: '500' as const, letterSpacing: 0.26, lineHeight: 18 },
+  labelSm: { fontSize: 12, fontWeight: '700' as const, letterSpacing: 0.6, lineHeight: 16 },
 };
 
 export const Spacing = {
@@ -53,12 +61,13 @@ export const Spacing = {
   lg: 24,
   xl: 48,
   gutter: 20,
-  margin: 24,
+  margin: 20,
 };
 
 export const Radius = {
-  sm: 4,
-  md: 6,
-  lg: 12,
+  sm: 2,
+  md: 4,
+  lg: 8,
+  xl: 12,
   full: 9999,
 };

@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
@@ -6,10 +6,7 @@ import { useFocusEffect } from 'expo-router';
 import { getProgressSummary } from '../../lib/db';
 import { useTheme, Typography, Spacing, Radius } from '../../lib/theme';
 
-type Summary = {
-  mastered: number;
-  due_today: number;
-};
+type Summary = { mastered: number; due_today: number };
 
 export default function HomeScreen() {
   const theme = useTheme();
@@ -24,32 +21,41 @@ export default function HomeScreen() {
   );
 
   const s = styles(theme);
+  const masteredPct = Math.round((summary.mastered / 3500) * 100);
 
   return (
     <SafeAreaView style={s.container}>
+      {/* Header */}
       <View style={s.header}>
-        <Text style={s.title}>The Last Word</Text>
-        <Text style={s.subtitle}>3,500</Text>
+        <Text style={s.appLabel}>THE LAST WORD</Text>
+        <Text style={s.totalCount}>3,500</Text>
       </View>
 
+      {/* Progress bar */}
+      <View style={s.progressSection}>
+        <View style={s.progressTrack}>
+          <View style={[s.progressFill, { width: `${masteredPct}%` }]} />
+        </View>
+        <Text style={s.progressText}>{summary.mastered} / 3,500 정복</Text>
+      </View>
+
+      {/* Stats */}
       <View style={s.statsRow}>
         <View style={s.statBlock}>
           <Text style={s.statValue}>{summary.due_today}</Text>
           <Text style={s.statLabel}>학습 대기</Text>
         </View>
-        <View style={s.divider} />
+        <View style={s.statDivider} />
         <View style={s.statBlock}>
-          <Text style={s.statValue}>
-            {summary.mastered}
-            <Text style={s.statTotal}> / 3,500</Text>
-          </Text>
+          <Text style={s.statValue}>{summary.mastered}</Text>
           <Text style={s.statLabel}>정복 완료</Text>
         </View>
       </View>
 
+      {/* Actions */}
       <View style={s.actions}>
         <Pressable
-          style={({ pressed }) => [s.primaryButton, pressed && s.buttonPressed]}
+          style={({ pressed }) => [s.primaryButton, pressed && { opacity: 0.85 }]}
           onPress={() => router.push('/session/setup')}
         >
           <Text style={s.primaryButtonText}>오늘 학습 시작</Text>
@@ -57,7 +63,7 @@ export default function HomeScreen() {
 
         {summary.due_today > 0 && (
           <Pressable
-            style={({ pressed }) => [s.secondaryButton, pressed && s.buttonPressed]}
+            style={({ pressed }) => [s.secondaryButton, pressed && { opacity: 0.85 }]}
             onPress={() => router.push('/review')}
           >
             <Text style={s.secondaryButtonText}>복습만 하기</Text>
@@ -77,45 +83,62 @@ const styles = (theme: ReturnType<typeof useTheme>) =>
     },
     header: {
       marginTop: Spacing.xl,
-      marginBottom: Spacing.xl,
+      marginBottom: Spacing.lg,
     },
-    title: {
-      ...Typography.labelMd,
+    appLabel: {
+      ...Typography.labelSm,
       color: theme.textSecondary,
-      textTransform: 'uppercase',
-      letterSpacing: 2,
+      letterSpacing: 3,
       marginBottom: Spacing.xs,
     },
-    subtitle: {
-      ...Typography.displayLg,
+    totalCount: {
+      fontSize: 56,
+      fontWeight: '700',
       color: theme.text,
+      letterSpacing: -1.5,
+      lineHeight: 64,
+    },
+    progressSection: {
+      marginBottom: Spacing.lg,
+      gap: Spacing.xs,
+    },
+    progressTrack: {
+      height: 4,
+      backgroundColor: theme.progressTrack,
+      borderRadius: Radius.full,
+      overflow: 'hidden',
+    },
+    progressFill: {
+      height: '100%',
+      backgroundColor: theme.primary,
+      borderRadius: Radius.full,
+    },
+    progressText: {
+      ...Typography.labelMd,
+      color: theme.primary,
     },
     statsRow: {
       flexDirection: 'row',
       backgroundColor: theme.surface,
-      borderRadius: Radius.lg,
+      borderRadius: Radius.xl,
       borderWidth: 1,
-      borderColor: theme.borderSubtle,
-      padding: Spacing.lg,
-      marginBottom: Spacing.xl,
+      borderColor: theme.border,
+      paddingVertical: Spacing.lg,
+      marginBottom: Spacing.lg,
     },
     statBlock: {
       flex: 1,
       alignItems: 'center',
+      gap: Spacing.xs,
     },
-    divider: {
+    statDivider: {
       width: 1,
-      backgroundColor: theme.borderSubtle,
-      marginHorizontal: Spacing.md,
+      backgroundColor: theme.border,
     },
     statValue: {
       ...Typography.headlineLg,
-      color: theme.text,
-      marginBottom: Spacing.xs,
-    },
-    statTotal: {
-      ...Typography.bodyMd,
-      color: theme.textSecondary,
+      color: theme.primary,
+      fontWeight: '700',
     },
     statLabel: {
       ...Typography.labelMd,
@@ -126,28 +149,22 @@ const styles = (theme: ReturnType<typeof useTheme>) =>
     },
     primaryButton: {
       backgroundColor: theme.primary,
-      borderRadius: Radius.md,
-      paddingVertical: Spacing.md,
+      borderRadius: Radius.lg,
+      paddingVertical: 18,
       alignItems: 'center',
     },
-    buttonPressed: {
-      opacity: 0.8,
-    },
     primaryButtonText: {
-      ...Typography.bodyLg,
+      ...Typography.headlineMd,
       color: theme.onPrimary,
-      fontWeight: '600',
     },
     secondaryButton: {
-      borderWidth: 1.5,
-      borderColor: theme.primary,
-      borderRadius: Radius.md,
-      paddingVertical: Spacing.md,
+      backgroundColor: theme.buttonSecondary,
+      borderRadius: Radius.lg,
+      paddingVertical: 18,
       alignItems: 'center',
     },
     secondaryButtonText: {
-      ...Typography.bodyLg,
-      color: theme.primary,
-      fontWeight: '600',
+      ...Typography.headlineMd,
+      color: theme.buttonSecondaryText,
     },
   });

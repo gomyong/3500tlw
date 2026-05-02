@@ -70,7 +70,7 @@ const styles = (theme: ReturnType<typeof useTheme>) =>
       marginBottom: Spacing.sm,
     },
     count: {
-      ...Typography.displayLg,
+      ...Typography.displayWord,
       color: theme.text,
       marginBottom: Spacing.xl,
     },

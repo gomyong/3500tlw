@@ -9,22 +9,16 @@ export default function TabsLayout() {
         headerShown: false,
         tabBarStyle: {
           backgroundColor: theme.surface,
-          borderTopColor: theme.borderSubtle,
+          borderTopColor: theme.border,
           borderTopWidth: 1,
         },
         tabBarActiveTintColor: theme.primary,
         tabBarInactiveTintColor: theme.textSecondary,
-        tabBarLabelStyle: { fontSize: 12, fontWeight: '500' },
+        tabBarLabelStyle: { fontSize: 11, fontWeight: '500' },
       }}
     >
-      <Tabs.Screen
-        name="index"
-        options={{ title: '홈' }}
-      />
-      <Tabs.Screen
-        name="progress"
-        options={{ title: '진행' }}
-      />
+      <Tabs.Screen name="index" options={{ title: '학습' }} />
+      <Tabs.Screen name="progress" options={{ title: '진행' }} />
     </Tabs>
   );
 }

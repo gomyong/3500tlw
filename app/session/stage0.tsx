@@ -17,6 +17,7 @@ export default function Stage0Screen() {
   const total = words.length;
   const current = currentIndex + 1;
   const isLast = currentIndex === total - 1;
+  const progress = current / total;
 
   function handleNext() {
     if (isLast) {
@@ -33,15 +34,26 @@ export default function Stage0Screen() {
 
   return (
     <SafeAreaView style={s.container}>
-      <Text style={s.counter}>{current} / {total}</Text>
-      <Text style={s.stageLabel}>MEMORIZE</Text>
+      {/* Progress */}
+      <View style={s.progressSection}>
+        <Text style={s.progressLabel}>암기</Text>
+        <Text style={s.progressCount}>
+          <Text style={s.progressCurrent}>{current}</Text>
+          <Text style={s.progressTotal}> / {total}</Text>
+        </Text>
+        <View style={s.progressTrack}>
+          <View style={[s.progressFill, { width: `${progress * 100}%` }]} />
+        </View>
+      </View>
 
+      {/* Word card */}
       <ScrollView
         style={s.scroll}
         contentContainerStyle={s.scrollContent}
         showsVerticalScrollIndicator={false}
       >
         <View style={s.card}>
+          <Text style={s.cardLabel}>학습 단어</Text>
           <Text style={s.wordText}>{word.word}</Text>
           <View style={s.divider} />
           <Text style={s.meaningText}>{word.meaning}</Text>
@@ -51,29 +63,30 @@ export default function Stage0Screen() {
         </View>
       </ScrollView>
 
-      <View style={s.buttonRow}>
-        <Pressable
-          style={({ pressed }) => [
-            s.prevButton,
-            currentIndex === 0 && s.buttonDisabled,
-            pressed && { opacity: 0.6 },
-          ]}
-          onPress={handlePrev}
-          disabled={currentIndex === 0}
-        >
-          <Text style={[s.prevButtonText, currentIndex === 0 && s.buttonDisabled]}>
-            ← 이전
-          </Text>
-        </Pressable>
+      {/* Buttons */}
+      <View style={s.footer}>
+        <View style={s.buttonRow}>
+          <Pressable
+            style={({ pressed }) => [
+              s.prevButton,
+              currentIndex === 0 && s.hiddenButton,
+              pressed && { opacity: 0.7 },
+            ]}
+            onPress={handlePrev}
+            disabled={currentIndex === 0}
+          >
+            <Text style={s.prevButtonText}>← 이전</Text>
+          </Pressable>
 
-        <Pressable
-          style={({ pressed }) => [s.nextButton, pressed && { opacity: 0.8 }]}
-          onPress={handleNext}
-        >
-          <Text style={s.nextButtonText}>
-            {isLast ? '테스트 시작 →' : '다음 →'}
-          </Text>
-        </Pressable>
+          <Pressable
+            style={({ pressed }) => [s.nextButton, pressed && { opacity: 0.85 }]}
+            onPress={handleNext}
+          >
+            <Text style={s.nextButtonText}>
+              {isLast ? '테스트 시작' : '다음'}
+            </Text>
+          </Pressable>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -84,86 +97,122 @@ const styles = (theme: ReturnType<typeof useTheme>) =>
     container: {
       flex: 1,
       backgroundColor: theme.background,
+    },
+    /* ── Progress ── */
+    progressSection: {
+      alignItems: 'center',
+      paddingTop: Spacing.xl,
+      paddingBottom: Spacing.lg,
       paddingHorizontal: Spacing.margin,
+      gap: Spacing.xs,
     },
-    counter: {
-      ...Typography.labelMd,
-      color: theme.textSecondary,
-      textAlign: 'center',
-      marginTop: Spacing.lg,
-    },
-    stageLabel: {
+    progressLabel: {
       ...Typography.labelSm,
       color: theme.textSecondary,
-      textAlign: 'center',
-      letterSpacing: 3,
-      marginTop: Spacing.xs,
-      marginBottom: Spacing.md,
+      textTransform: 'uppercase',
+      letterSpacing: 2,
     },
+    progressCount: {
+      lineHeight: 36,
+    },
+    progressCurrent: {
+      ...Typography.headlineLg,
+      color: theme.primary,
+      fontWeight: '700',
+    },
+    progressTotal: {
+      ...Typography.headlineMd,
+      color: theme.textSecondary,
+    },
+    progressTrack: {
+      width: 160,
+      height: 3,
+      backgroundColor: theme.progressTrack,
+      borderRadius: Radius.full,
+      overflow: 'hidden',
+      marginTop: Spacing.xs,
+    },
+    progressFill: {
+      height: '100%',
+      backgroundColor: theme.primary,
+      borderRadius: Radius.full,
+    },
+    /* ── Card ── */
     scroll: { flex: 1 },
     scrollContent: {
+      paddingHorizontal: Spacing.margin,
       paddingVertical: Spacing.sm,
     },
     card: {
       backgroundColor: theme.surface,
-      borderRadius: Radius.lg,
+      borderRadius: Radius.xl,
       borderWidth: 1,
-      borderColor: theme.borderSubtle,
+      borderColor: theme.border,
       padding: Spacing.xl,
+      gap: Spacing.sm,
+    },
+    cardLabel: {
+      ...Typography.labelSm,
+      color: theme.textSecondary,
+      textTransform: 'uppercase',
+      letterSpacing: 2,
+      marginBottom: Spacing.xs,
     },
     wordText: {
-      ...Typography.displayLg,
+      ...Typography.displayWord,
       color: theme.text,
-      marginBottom: Spacing.lg,
+      textTransform: 'uppercase',
     },
     divider: {
       height: 1,
       backgroundColor: theme.borderSubtle,
-      marginBottom: Spacing.lg,
+      marginVertical: Spacing.sm,
     },
     meaningText: {
       ...Typography.headlineMd,
       color: theme.primary,
-      marginBottom: Spacing.sm,
+      lineHeight: 30,
     },
     exampleText: {
       ...Typography.bodyMd,
       color: theme.textSecondary,
       fontStyle: 'italic',
-      marginTop: Spacing.sm,
-      lineHeight: 24,
+      lineHeight: 22,
+      marginTop: Spacing.xs,
+    },
+    /* ── Footer ── */
+    footer: {
+      paddingHorizontal: Spacing.margin,
+      paddingVertical: Spacing.lg,
+      paddingBottom: Spacing.xl,
     },
     buttonRow: {
       flexDirection: 'row',
-      gap: Spacing.sm,
-      paddingVertical: Spacing.md,
+      gap: Spacing.md,
     },
     prevButton: {
       flex: 1,
-      borderWidth: 1,
-      borderColor: theme.border,
-      borderRadius: Radius.md,
-      paddingVertical: Spacing.md,
+      borderRadius: Radius.lg,
+      paddingVertical: 18,
       alignItems: 'center',
+      backgroundColor: theme.buttonSecondary,
+    },
+    hiddenButton: {
+      opacity: 0,
     },
     prevButtonText: {
-      ...Typography.bodyLg,
-      color: theme.textSecondary,
-      fontWeight: '600',
+      ...Typography.headlineMd,
+      color: theme.buttonSecondaryText,
     },
     nextButton: {
       flex: 2,
-      backgroundColor: theme.primary,
-      borderRadius: Radius.md,
-      paddingVertical: Spacing.md,
+      borderRadius: Radius.lg,
+      paddingVertical: 18,
       alignItems: 'center',
+      backgroundColor: theme.primary,
     },
     nextButtonText: {
-      ...Typography.bodyLg,
+      ...Typography.headlineMd,
       color: theme.onPrimary,
-      fontWeight: '600',
-    },
-    buttonDisabled: {
-      opacity: 0.3,
     },
   });

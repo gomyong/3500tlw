@@ -16,28 +16,21 @@ type Summary = {
 export default function ProgressScreen() {
   const theme = useTheme();
   const [summary, setSummary] = useState<Summary>({
-    total: 3500,
-    mastered: 0,
-    in_progress: 0,
-    unstarted: 3500,
-    due_today: 0,
+    total: 3500, mastered: 0, in_progress: 0, unstarted: 3500, due_today: 0,
   });
 
   useFocusEffect(
-    useCallback(() => {
-      getProgressSummary().then(setSummary);
-    }, [])
+    useCallback(() => { getProgressSummary().then(setSummary); }, [])
   );
 
   const masteredPct = summary.mastered / summary.total;
   const inProgressPct = summary.in_progress / summary.total;
-
   const s = styles(theme);
 
   const rows = [
     { label: '정복 완료', value: summary.mastered, color: theme.primary },
-    { label: '학습 중', value: summary.in_progress, color: theme.primaryContainer },
-    { label: '미학습', value: summary.unstarted, color: theme.borderSubtle },
+    { label: '학습 중', value: summary.in_progress, color: '#5d9e8f' },
+    { label: '미학습', value: summary.unstarted, color: theme.progressTrack },
     { label: '오늘 복습 대기', value: summary.due_today, color: theme.error },
   ];
 
@@ -45,21 +38,21 @@ export default function ProgressScreen() {
     <SafeAreaView style={s.container}>
       <Text style={s.heading}>진행 현황</Text>
 
-      {/* Progress bar */}
+      {/* Count + bar */}
+      <View style={s.countSection}>
+        <Text style={s.masteredNum}>{summary.mastered.toLocaleString()}</Text>
+        <Text style={s.masteredDen}> / 3,500</Text>
+      </View>
       <View style={s.barContainer}>
         <View style={[s.barSegment, { flex: masteredPct || 0.001, backgroundColor: theme.primary }]} />
-        <View style={[s.barSegment, { flex: inProgressPct || 0.001, backgroundColor: theme.primaryContainer }]} />
-        <View style={[s.barSegment, { flex: Math.max(0, 1 - masteredPct - inProgressPct), backgroundColor: theme.borderSubtle }]} />
+        <View style={[s.barSegment, { flex: inProgressPct || 0.001, backgroundColor: '#5d9e8f' }]} />
+        <View style={[s.barSegment, { flex: Math.max(0, 1 - masteredPct - inProgressPct), backgroundColor: theme.progressTrack }]} />
       </View>
-
-      <Text style={s.masteredCount}>
-        {summary.mastered} <Text style={s.masteredTotal}>/ 3,500</Text>
-      </Text>
 
       {/* Stats list */}
       <View style={s.list}>
-        {rows.map((row) => (
-          <View key={row.label} style={s.row}>
+        {rows.map((row, i) => (
+          <View key={row.label} style={[s.row, i === rows.length - 1 && { borderBottomWidth: 0 }]}>
             <View style={[s.dot, { backgroundColor: row.color }]} />
             <Text style={s.rowLabel}>{row.label}</Text>
             <Text style={s.rowValue}>{row.value.toLocaleString()}</Text>
@@ -78,36 +71,42 @@ const styles = (theme: ReturnType<typeof useTheme>) =>
       paddingHorizontal: Spacing.margin,
     },
     heading: {
-      ...Typography.headlineMd,
+      ...Typography.headlineLg,
       color: theme.text,
       marginTop: Spacing.xl,
       marginBottom: Spacing.lg,
     },
+    countSection: {
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+      marginBottom: Spacing.sm,
+    },
+    masteredNum: {
+      fontSize: 48,
+      fontWeight: '700',
+      color: theme.primary,
+      letterSpacing: -1,
+      lineHeight: 56,
+    },
+    masteredDen: {
+      ...Typography.headlineMd,
+      color: theme.textSecondary,
+      marginBottom: 6,
+    },
     barContainer: {
       flexDirection: 'row',
-      height: 12,
+      height: 8,
       borderRadius: Radius.full,
       overflow: 'hidden',
-      backgroundColor: theme.borderSubtle,
-      marginBottom: Spacing.md,
-    },
-    barSegment: {
-      height: '100%',
-    },
-    masteredCount: {
-      ...Typography.headlineLg,
-      color: theme.text,
+      backgroundColor: theme.progressTrack,
       marginBottom: Spacing.xl,
     },
-    masteredTotal: {
-      ...Typography.bodyMd,
-      color: theme.textSecondary,
-    },
+    barSegment: { height: '100%' },
     list: {
       backgroundColor: theme.surface,
-      borderRadius: Radius.lg,
+      borderRadius: Radius.xl,
       borderWidth: 1,
-      borderColor: theme.borderSubtle,
+      borderColor: theme.border,
       overflow: 'hidden',
     },
     row: {
@@ -119,19 +118,11 @@ const styles = (theme: ReturnType<typeof useTheme>) =>
       borderBottomColor: theme.borderSubtle,
     },
     dot: {
-      width: 10,
-      height: 10,
+      width: 8,
+      height: 8,
       borderRadius: Radius.full,
       marginRight: Spacing.sm,
     },
-    rowLabel: {
-      ...Typography.bodyMd,
-      color: theme.text,
-      flex: 1,
-    },
-    rowValue: {
-      ...Typography.bodyMd,
-      color: theme.textSecondary,
-      fontWeight: '600',
-    },
+    rowLabel: { ...Typography.bodyMd, color: theme.text, flex: 1 },
+    rowValue: { ...Typography.bodyMd, color: theme.primary, fontWeight: '600' },
   });

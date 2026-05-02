@@ -33,21 +33,16 @@ export default function Stage5Screen() {
     if (finishCalledRef.current) return;
     finishCalledRef.current = true;
     setFinishing(true);
-
     for (const w of words) {
-      const wasCorrect = !w.failedInStage1;
-      await updateWordAfterSession(w.id, wasCorrect, w.currentLevel, w.failCount);
+      await updateWordAfterSession(w.id, !w.failedInStage1, w.currentLevel, w.failCount);
     }
-
     const summary = await getProgressSummary();
-
     if (summary.mastered >= 3500) {
       await sendMissionCompleteNotification();
       resetSession();
       router.replace('/termination');
       return;
     }
-
     if (summary.mastered > 0 && summary.mastered % 10 === 0) {
       await sendMasteredMilestoneNotification(summary.mastered);
     }
@@ -56,20 +51,14 @@ export default function Stage5Screen() {
     router.replace('/(tabs)');
   }
 
-  // Handle case where there are no wrong words (all correct in stage1)
   useEffect(() => {
-    if (pool.length === 0) {
-      finishSession();
-    }
+    if (pool.length === 0) finishSession();
   }, []);
 
   function handleAnswer(correct: boolean) {
     if (correct) {
       const newPool = pool.filter((_, i) => i !== currentIndex);
-      if (newPool.length === 0) {
-        finishSession();
-        return;
-      }
+      if (newPool.length === 0) { finishSession(); return; }
       setPool(shuffle(newPool));
       setCurrentIndex(0);
     } else {
@@ -88,28 +77,44 @@ export default function Stage5Screen() {
   const word = pool[currentIndex];
   if (!word) return null;
 
+  const total = pool.length;
+  const progress = 1 - total / (getStage5Words().length || 1);
+
   return (
     <SafeAreaView style={s.container}>
-      <Text style={s.counter}>{pool.length}개 남음</Text>
-      <Text style={s.stageLabel}>FINAL SWEEP</Text>
-
-      <View style={s.card}>
-        <Text style={s.wordText}>{word.word}</Text>
+      <View style={s.progressSection}>
+        <Text style={s.stageLabel}>FINAL SWEEP</Text>
+        <Text style={s.progressCount}>
+          <Text style={s.progressCurrent}>{total}</Text>
+          <Text style={s.progressTotal}> 개 남음</Text>
+        </Text>
+        <View style={s.progressTrack}>
+          <View style={[s.progressFill, { width: `${Math.max(progress, 0.02) * 100}%` }]} />
+        </View>
       </View>
 
-      <View style={s.buttonRow}>
-        <Pressable
-          style={({ pressed }) => [s.wrongButton, pressed && { opacity: 0.8 }]}
-          onPress={() => handleAnswer(false)}
-        >
-          <Text style={s.wrongButtonText}>몰랐다</Text>
-        </Pressable>
-        <Pressable
-          style={({ pressed }) => [s.correctButton, pressed && { opacity: 0.8 }]}
-          onPress={() => handleAnswer(true)}
-        >
-          <Text style={s.correctButtonText}>알았다</Text>
-        </Pressable>
+      <View style={s.cardArea}>
+        <View style={s.card}>
+          <Text style={s.cardLabel}>학습 단어</Text>
+          <Text style={s.wordText}>{word.word.toUpperCase()}</Text>
+        </View>
+      </View>
+
+      <View style={s.footer}>
+        <View style={s.buttonRow}>
+          <Pressable
+            style={({ pressed }) => [s.wrongButton, pressed && { opacity: 0.85 }]}
+            onPress={() => handleAnswer(false)}
+          >
+            <Text style={s.wrongButtonText}>몰랐다</Text>
+          </Pressable>
+          <Pressable
+            style={({ pressed }) => [s.correctButton, pressed && { opacity: 0.85 }]}
+            onPress={() => handleAnswer(true)}
+          >
+            <Text style={s.correctButtonText}>알았다</Text>
+          </Pressable>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -117,63 +122,62 @@ export default function Stage5Screen() {
 
 const styles = (theme: ReturnType<typeof useTheme>) =>
   StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: theme.background,
-      paddingHorizontal: Spacing.margin,
-    },
-    counter: {
-      ...Typography.labelMd,
-      color: theme.textSecondary,
-      textAlign: 'center',
-      marginTop: Spacing.lg,
+    container: { flex: 1, backgroundColor: theme.background },
+    progressSection: {
+      alignItems: 'center',
+      paddingTop: Spacing.xl,
+      paddingBottom: Spacing.lg,
+      gap: Spacing.xs,
     },
     stageLabel: {
       ...Typography.labelSm,
       color: theme.textSecondary,
-      textAlign: 'center',
       letterSpacing: 3,
+      textTransform: 'uppercase',
+    },
+    progressCount: { lineHeight: 36 },
+    progressCurrent: { ...Typography.headlineLg, color: theme.primary, fontWeight: '700' },
+    progressTotal: { ...Typography.headlineMd, color: theme.textSecondary },
+    progressTrack: {
+      width: 160, height: 3,
+      backgroundColor: theme.progressTrack,
+      borderRadius: Radius.full, overflow: 'hidden',
       marginTop: Spacing.xs,
-      marginBottom: Spacing.xl,
+    },
+    progressFill: {
+      height: '100%', backgroundColor: theme.primary, borderRadius: Radius.full,
+    },
+    cardArea: {
+      flex: 1, paddingHorizontal: Spacing.margin, justifyContent: 'center',
     },
     card: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    wordText: {
-      ...Typography.displayLg,
-      color: theme.text,
-      textAlign: 'center',
-    },
-    buttonRow: {
-      flexDirection: 'row',
+      backgroundColor: theme.surface,
+      borderRadius: Radius.xl,
+      borderWidth: 1,
+      borderColor: theme.border,
+      paddingHorizontal: Spacing.xl,
+      paddingVertical: Spacing.xl,
       gap: Spacing.sm,
-      paddingBottom: Spacing.lg,
     },
+    cardLabel: {
+      ...Typography.labelSm, color: theme.textSecondary,
+      textTransform: 'uppercase', letterSpacing: 2,
+    },
+    wordText: { ...Typography.displayWord, color: theme.text },
+    footer: {
+      paddingHorizontal: Spacing.margin,
+      paddingVertical: Spacing.lg,
+      paddingBottom: Spacing.xl,
+    },
+    buttonRow: { flexDirection: 'row', gap: Spacing.md },
     wrongButton: {
-      flex: 1,
-      borderWidth: 1.5,
-      borderColor: theme.error,
-      borderRadius: Radius.md,
-      paddingVertical: Spacing.md,
-      alignItems: 'center',
+      flex: 1, backgroundColor: theme.buttonSecondary,
+      borderRadius: Radius.lg, paddingVertical: 18, alignItems: 'center',
     },
-    wrongButtonText: {
-      ...Typography.bodyLg,
-      color: theme.error,
-      fontWeight: '600',
-    },
+    wrongButtonText: { ...Typography.headlineMd, color: theme.buttonSecondaryText },
     correctButton: {
-      flex: 1,
-      backgroundColor: theme.primary,
-      borderRadius: Radius.md,
-      paddingVertical: Spacing.md,
-      alignItems: 'center',
+      flex: 1, backgroundColor: theme.primary,
+      borderRadius: Radius.lg, paddingVertical: 18, alignItems: 'center',
     },
-    correctButtonText: {
-      ...Typography.bodyLg,
-      color: theme.onPrimary,
-      fontWeight: '600',
-    },
+    correctButtonText: { ...Typography.headlineMd, color: theme.onPrimary },
   });
