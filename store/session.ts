@@ -12,31 +12,29 @@ export type SessionWord = Word & {
 type SessionStore = {
   words: SessionWord[];
   currentIndex: number;
-  stage: 1 | 2 | 3 | 4 | 5;
+  stage: 0 | 1 | 2 | 3 | 4 | 5;
   isReviewSession: boolean;
 
   initSession: (words: SessionWord[], isReview?: boolean) => void;
   markCorrect: () => void;
   markWrong: () => void;
   advanceIndex: () => void;
-  setStage: (stage: 1 | 2 | 3 | 4 | 5) => void;
+  setStage: (stage: 0 | 1 | 2 | 3 | 4 | 5) => void;
   resetSession: () => void;
 
-  getStage1Words: () => SessionWord[];
   getStage2Words: () => SessionWord[];
   getStage3Words: () => SessionWord[];
-  getStage4Words: () => SessionWord[];
   getStage5Words: () => SessionWord[];
 };
 
 export const useSessionStore = create<SessionStore>((set, get) => ({
   words: [],
   currentIndex: 0,
-  stage: 1,
+  stage: 0,
   isReviewSession: false,
 
   initSession: (words, isReview = false) =>
-    set({ words, currentIndex: 0, stage: 1, isReviewSession: isReview }),
+    set({ words, currentIndex: 0, stage: 0, isReviewSession: isReview }),
 
   markCorrect: () =>
     set((s) => {
@@ -66,16 +64,9 @@ export const useSessionStore = create<SessionStore>((set, get) => ({
   setStage: (stage) => set({ stage, currentIndex: 0 }),
 
   resetSession: () =>
-    set({ words: [], currentIndex: 0, stage: 1, isReviewSession: false }),
-
-  getStage1Words: () => get().words,
+    set({ words: [], currentIndex: 0, stage: 0, isReviewSession: false }),
 
   getStage2Words: () => get().words.filter((w) => w.failedInStage1),
-
   getStage3Words: () => get().words.filter((w) => w.failedInStage1),
-
-  getStage4Words: () => get().words.filter((w) => w.failedInStage1),
-
-  getStage5Words: () =>
-    get().words.filter((w) => w.failedInStage1 || w.failedInStage3),
+  getStage5Words: () => get().words.filter((w) => w.failedInStage1 || w.failedInStage3),
 }));

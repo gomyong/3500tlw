@@ -38,7 +38,7 @@ export default function SessionSetupScreen() {
     }
 
     initSession(sessionWords, false);
-    router.replace('/session/stage1');
+    router.replace('/session/stage0');
   }
 
   return (

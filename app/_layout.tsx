@@ -35,6 +35,7 @@ export default function RootLayout() {
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="session/setup" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="session/stage0" />
         <Stack.Screen name="session/stage1" />
         <Stack.Screen name="session/stage2" />
         <Stack.Screen name="session/stage3" />
