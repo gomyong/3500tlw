@@ -5,9 +5,8 @@ const os = require('os');
 const projectRoot = __dirname;
 const config = getDefaultConfig(projectRoot);
 
-// ~/node_modules has react-native@0.85.2 but project requires 0.81.5.
-// Block only RN packages from the home directory so Metro doesn't pick up
-// the wrong version, while leaving @expo/cli and metro itself accessible.
+// ~/node_modules has react-native@0.85.2 but this project needs 0.81.5.
+// Block RN packages from the home directory; Metro and @expo/cli remain accessible.
 const homeNM = path.resolve(os.homedir(), 'node_modules');
 const e = homeNM.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -21,9 +20,17 @@ config.resolver.blockList = [
   new RegExp(`^${e}/react-dom/.*`),
 ];
 
-// Explicitly prefer project node_modules for all resolutions.
 config.resolver.nodeModulesPaths = [
   path.resolve(projectRoot, 'node_modules'),
 ];
+
+// Inject document/location polyfills before HMR initialises.
+// Hermes raises ReferenceError for undeclared globals; ?. only catches null/undefined.
+const originalGetPolyfills = config.serializer.getPolyfills;
+config.serializer.getPolyfills = (params) => {
+  const defaults = originalGetPolyfills ? originalGetPolyfills(params) : [];
+  const list = Array.isArray(defaults) ? defaults : [];
+  return [path.resolve(projectRoot, 'polyfills.js'), ...list];
+};
 
 module.exports = config;
