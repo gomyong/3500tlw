@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Pretendard', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#a6f1dd",
+                        "primary": "#005648",
+                        "on-tertiary-container": "#ffd7d3",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "surface-variant": "#e4e2e1",
+                        "secondary-container": "#dfe0e0",
+                        "surface-bright": "#fbf9f8",
+                        "surface-dim": "#dcd9d9",
+                        "secondary": "#5d5f5f",
+                        "on-error-container": "#93000a",
+                        "tertiary": "#9c0014",
+                        "surface-tint": "#186a5a",
+                        "on-secondary-container": "#616363",
+                        "on-tertiary-fixed": "#410004",
+                        "secondary-fixed": "#e2e2e2",
+                        "on-primary-fixed": "#00201a",
+                        "outline": "#6f7975",
+                        "error-container": "#ffdad6",
+                        "outline-variant": "#bec9c4",
+                        "on-tertiary-fixed-variant": "#930013",
+                        "primary-container": "#1f6f5f",
+                        "surface-container-lowest": "#ffffff",
+                        "background": "#fbf9f8",
+                        "surface-container-high": "#eae8e7",
+                        "tertiary-fixed": "#ffdad7",
+                        "surface-container": "#f0eded",
+                        "tertiary-container": "#c02228",
+                        "surface-container-highest": "#e4e2e1",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#3f4945",
+                        "surface": "#fbf9f8",
+                        "on-primary-container": "#a3efdb",
+                        "inverse-on-surface": "#f3f0f0",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#005143",
+                        "inverse-surface": "#303030",
+                        "on-background": "#1b1c1c",
+                        "on-error": "#ffffff",
+                        "surface-container-low": "#f6f3f2",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#454747",
+                        "tertiary-fixed-dim": "#ffb3ad",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "inverse-primary": "#8ad5c1",
+                        "primary-fixed-dim": "#8ad5c1",
+                        "on-surface": "#1b1c1c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "container-padding": "20px",
+                        "card-gap": "16px",
+                        "lg": "24px",
+                        "sm": "8px",
+                        "xl": "48px",
+                        "unit": "4px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["Pretendard"],
+                        "body-md": ["Pretendard"],
+                        "body-lg": ["Pretendard"],
+                        "headline-md": ["Pretendard"],
+                        "label-sm": ["Pretendard"],
+                        "display-word": ["Pretendard"],
+                        "headline-lg": ["Pretendard"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                        "label-sm": ["13px", {"lineHeight": "18px", "fontWeight": "500"}],
+                        "display-word": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+<!-- TopAppBar from {{DATA:COMPONENTS:COMPONENTS_8}} -->
+<header class="bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800 docked full-width top-0 z-50">
+<div class="flex justify-between items-center w-full px-6 h-16 max-w-screen-xl mx-auto">
+<button class="text-[#1F6F5F] dark:text-[#2a947f] hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors p-2 rounded-full active:opacity-80 transition-opacity duration-150">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+<h1 class="text-lg font-bold tracking-tight text-[#1F6F5F] dark:text-[#2a947f] font-['Pretendard','Inter',sans-serif]">마지막 단어</h1>
+<button class="text-[#1F6F5F] dark:text-[#2a947f] hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors p-2 rounded-full active:opacity-80 transition-opacity duration-150">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<main class="flex-grow flex flex-col items-center justify-center px-container-padding py-xl">
+<!-- Progress Indicator -->
+<div class="mb-xl text-center space-y-sm">
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">
+                진행률
+            </div>
+<div class="font-headline-lg text-headline-lg text-[#1F6F5F]">
+                12 / 20
+            </div>
+<!-- Progress Bar -->
+<div class="w-48 h-1 bg-surface-container rounded-full overflow-hidden mx-auto">
+<div class="h-full bg-primary-container w-[60%]"></div>
+</div>
+</div>
+<!-- Testing Card -->
+<div class="w-full max-w-md aspect-[4/3] bg-surface-container-lowest border border-stone-200 rounded-lg flex items-center justify-center text-center p-xl">
+<div class="space-y-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant tracking-wider uppercase">학습 단어</span>
+<h2 class="font-display-word text-display-word text-[#333333] tracking-tighter">
+                    ABANDON
+                </h2>
+</div>
+</div>
+<!-- Hint/Action -->
+<div class="mt-lg">
+<button class="font-label-sm text-label-sm text-outline hover:text-primary transition-colors flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]" data-icon="lightbulb">lightbulb</span>
+                힌트 보기
+            </button>
+</div>
+</main>
+<!-- Fixed Interaction Bar -->
+<footer class="sticky bottom-0 bg-background py-lg px-container-padding max-w-screen-xl mx-auto w-full pb-32">
+<div class="grid grid-cols-2 gap-md w-full max-w-md mx-auto">
+<!-- Forgot Button -->
+<button class="flex items-center justify-center py-4 px-lg border border-stone-300 rounded-lg bg-[#EEEEEE] text-secondary font-headline-md text-headline-md hover:bg-stone-100 active:scale-95 transition-all">
+                몰랐다
+            </button>
+<!-- Know Button -->
+<button class="flex items-center justify-center py-4 px-lg bg-[#1F6F5F] text-on-primary font-headline-md text-headline-md rounded-lg active:scale-95 transition-all">
+                알았다
+            </button>
+</div>
+</footer>
+<!-- BottomNavBar from {{DATA:COMPONENTS:COMPONENTS_8}} -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800">
+<button class="flex flex-col items-center justify-center text-[#1F6F5F] dark:text-[#2a947f] bg-neutral-50 dark:bg-neutral-800 rounded-xl px-4 py-1.5 transition-all active:scale-95 duration-200">
+<span class="material-symbols-outlined">school</span>
+<span class="font-['Pretendard','Inter',sans-serif] text-[11px] font-medium">학습</span>
+</button>
+<button class="flex flex-col items-center justify-center text-neutral-400 dark:text-neutral-500 px-4 py-1.5 transition-all hover:text-[#1F6F5F] dark:hover:text-[#2a947f] active:scale-95 duration-200">
+<span class="material-symbols-outlined">auto_stories</span>
+<span class="font-['Pretendard','Inter',sans-serif] text-[11px] font-medium">서재</span>
+</button>
+<button class="flex flex-col items-center justify-center text-neutral-400 dark:text-neutral-500 px-4 py-1.5 transition-all hover:text-[#1F6F5F] dark:hover:text-[#2a947f] active:scale-95 duration-200">
+<span class="material-symbols-outlined">equalizer</span>
+<span class="font-['Pretendard','Inter',sans-serif] text-[11px] font-medium">통계</span>
+</button>
+<button class="flex flex-col items-center justify-center text-neutral-400 dark:text-neutral-500 px-4 py-1.5 transition-all hover:text-[#1F6F5F] dark:hover:text-[#2a947f] active:scale-95 duration-200">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Pretendard','Inter',sans-serif] text-[11px] font-medium">설정</span>
+</button>
+</nav>
+</body></html>

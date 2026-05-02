@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>내 통계 - 마지막 단어</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link as="style" crossorigin="" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline": "#6f7975",
+                    "surface-container-highest": "#d4e4fc",
+                    "surface-variant": "#EEEEEE",
+                    "on-secondary-fixed": "#121c2c",
+                    "on-primary": "#ffffff",
+                    "on-secondary-fixed-variant": "#3d4759",
+                    "error": "#ba1a1a",
+                    "tertiary": "#763a2c",
+                    "on-tertiary-container": "#ffd7cf",
+                    "tertiary-fixed-dim": "#ffb4a3",
+                    "primary": "#005648",
+                    "surface-bright": "#f8f9ff",
+                    "outline-variant": "#bec9c4",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed": "#00201a",
+                    "on-secondary-container": "#596376",
+                    "surface-container-high": "#dce9ff",
+                    "surface-tint": "#186a5a",
+                    "tertiary-container": "#935142",
+                    "surface-dim": "#ccdbf4",
+                    "inverse-primary": "#8ad5c1",
+                    "on-tertiary-fixed-variant": "#713628",
+                    "inverse-on-surface": "#eaf1ff",
+                    "on-error": "#ffffff",
+                    "secondary": "#555f71",
+                    "primary-fixed": "#a6f1dd",
+                    "surface-container-low": "#eff4ff",
+                    "inverse-surface": "#223144",
+                    "secondary-fixed": "#d9e3f9",
+                    "on-tertiary-fixed": "#390c04",
+                    "on-surface-variant": "#3f4945",
+                    "on-error-container": "#93000a",
+                    "on-primary-container": "#a3efdb",
+                    "error-container": "#ffdad6",
+                    "on-background": "#0d1c2e",
+                    "secondary-fixed-dim": "#bdc7dc",
+                    "on-primary-fixed-variant": "#005143",
+                    "secondary-container": "#d6e0f6",
+                    "tertiary-fixed": "#ffdad2",
+                    "on-surface": "#0d1c2e",
+                    "primary-fixed-dim": "#8ad5c1",
+                    "background": "#f8f9ff",
+                    "surface": "#f8f9ff",
+                    "surface-container": "#e5eeff",
+                    "primary-container": "#1F6F5F",
+                    "surface-container-lowest": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "lg": "24px",
+                    "gutter": "20px",
+                    "base": "4px",
+                    "max-width": "1200px",
+                    "md": "16px",
+                    "sm": "8px",
+                    "xs": "4px",
+                    "margin": "24px",
+                    "xl": "48px",
+                    "container-padding": "20px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Pretendard", "sans-serif"],
+                    "body-lg": ["Pretendard", "sans-serif"],
+                    "label-sm": ["Pretendard", "sans-serif"],
+                    "headline-lg": ["Pretendard", "sans-serif"],
+                    "headline-md": ["Pretendard", "sans-serif"],
+                    "label-md": ["Pretendard", "sans-serif"],
+                    "body-md": ["Pretendard", "sans-serif"],
+                    "label-caps": ["Pretendard", "sans-serif"]
+            },
+            "fontSize": {
+                    "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "1.4", "letterSpacing": "0.03em", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+      body {
+        font-family: 'Pretendard', sans-serif;
+        min-height: max(884px, 100dvh);
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800 docked full-width top-0 z-50 fixed w-full">
+<div class="flex justify-between items-center w-full px-6 h-16 max-w-screen-xl mx-auto">
+<div class="flex items-center gap-4">
+<button class="hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors p-2 rounded">
+<span class="material-symbols-outlined text-[#1F6F5F] dark:text-[#2a947f]" data-icon="menu_book">menu_book</span>
+</button>
+<h1 class="text-lg font-bold text-[#1F6F5F] dark:text-[#2a947f] font-['Pretendard','Inter',sans-serif] tracking-tight">마지막 단어</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-neutral-400" data-icon="account_circle">account_circle</span>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="pt-24 px-container-padding max-w-screen-xl mx-auto">
+<!-- Summary Section -->
+<section class="mb-xl text-center">
+<h2 class="font-headline-lg text-headline-lg text-on-background mb-sm">학습 현황</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">
+                전체 3,500 단어 중 현재 학습 상태입니다.
+            </p>
+</section>
+<!-- Analytical Data Visualization -->
+<div class="bg-surface-container-lowest border border-neutral-200 p-lg mb-lg rounded-xl overflow-hidden">
+<!-- Large Segmented Progress Bar -->
+<div class="flex h-12 w-full mb-lg overflow-hidden rounded-full">
+<!-- Mastered (31%) -->
+<div class="h-full bg-[#1F6F5F]" style="width: 31%;" title="정복 완료"></div>
+<!-- In Progress (12.5%) -->
+<div class="h-full bg-primary-fixed" style="width: 12.5%;" title="학습 중"></div>
+<!-- Unstarted (56.5%) -->
+<div class="h-full bg-[#EEEEEE]" style="width: 56.5%;" title="미학습"></div>
+</div>
+<!-- Legend Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg pt-lg border-t border-neutral-100">
+<!-- Mastered -->
+<div class="flex flex-col gap-xs">
+<div class="flex items-center gap-sm">
+<span class="w-3 h-3 bg-[#1F6F5F] rounded-full"></span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">정복 완료</span>
+</div>
+<span class="font-headline-lg text-on-background">1,240</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">전체 어휘의 31.0%</span>
+</div>
+<!-- In Progress -->
+<div class="flex flex-col gap-xs border-l border-neutral-100 pl-lg">
+<div class="flex items-center gap-sm">
+<span class="w-3 h-3 bg-primary-fixed rounded-full"></span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">학습 중</span>
+</div>
+<span class="font-headline-lg text-on-background">500</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">12.5% 활성 학습 중</span>
+</div>
+<!-- Unstarted -->
+<div class="flex flex-col gap-xs border-l border-neutral-100 pl-lg">
+<div class="flex items-center gap-sm">
+<span class="w-3 h-3 bg-[#EEEEEE] rounded-full border border-neutral-300"></span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">미학습</span>
+</div>
+<span class="font-headline-lg text-on-background">2,260</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">남은 비율 56.5%</span>
+</div>
+</div>
+</div>
+<!-- Meta Insight Card -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg items-stretch">
+<div class="bg-white border border-neutral-200 p-lg flex flex-col justify-between rounded-xl">
+<div>
+<h3 class="font-label-caps text-label-caps text-primary mb-md">학습 전망</h3>
+<p class="font-headline-md text-headline-md text-on-background mb-xs">예상 완주일: 2026년 7월</p>
+<p class="font-body-md text-on-surface-variant">주당 평균 42개 단어 습득 속도 기준입니다.</p>
+</div>
+<div class="mt-xl">
+<button class="bg-[#1F6F5F] text-on-primary px-lg py-md font-label-md rounded-lg hover:opacity-90 transition-opacity w-full md:w-auto">
+                        목표 수정
+                    </button>
+</div>
+</div>
+<!-- Contextual Image Section -->
+<div class="relative min-h-[300px] overflow-hidden rounded-xl">
+<img alt="학구적인 서재 환경" class="absolute inset-0 w-full h-full object-cover" data-alt="A meticulously organized scholarly study or private library. Warm, soft lighting filters through large windows, illuminating rows of leather-bound books on dark wood shelves. A heavy wooden desk sits in the center with a single open notebook and a classic fountain pen, evoking a sense of deep focus, intellectual rigor, and quiet progress. The aesthetic is clean and academic, utilizing a palette of deep forest greens and warm parchment tones to reflect serious learning and linguistic mastery." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCj8HIGIxEwxBiJdAKrRfKIR0BcV5czxzht_gwOeCRS84npRUUmwEN7rMvpQOco19wSv9ZhVpl4xxf1cY6PbYpbE7mzVm0_QAAOeOcJuHBZMKdUnIJWZT7fQ8nzaTMogY9mcoh88iHiO_P9cH4PcTxMfDJbUSlh3jqWQM-7Jidsq_3ff1gTCnKdL_swcIYPoVYIcighZTlL1aX6FFwoAOZO4UJ6UF70NXBr_kS1Yk13aZgaDiNabrJ0ApIfBvXjSU162Y95L_JecNeB"/>
+<div class="absolute inset-0 bg-primary/10 mix-blend-multiply"></div>
+<div class="absolute bottom-lg left-lg bg-white/90 backdrop-blur-sm p-md border border-neutral-200 rounded-lg">
+<span class="font-label-md text-primary font-bold">연속 학습: 14일</span>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800">
+<a class="flex flex-col items-center justify-center text-neutral-400 dark:text-neutral-500 px-4 py-1.5 hover:text-[#1F6F5F] dark:hover:text-[#2a947f] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+<span class="font-['Pretendard','Inter',sans-serif] text-[11px] font-medium mt-1">학습</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-400 dark:text-neutral-500 px-4 py-1.5 hover:text-[#1F6F5F] dark:hover:text-[#2a947f] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="auto_stories">auto_stories</span>
+<span class="font-['Pretendard','Inter',sans-serif] text-[11px] font-medium mt-1">서재</span>
+</a>
+<!-- Active State: Stats -->
+<a class="flex flex-col items-center justify-center text-[#1F6F5F] dark:text-[#2a947f] bg-neutral-50 dark:bg-neutral-800 rounded-xl px-4 py-1.5 scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="equalizer">equalizer</span>
+<span class="font-['Pretendard','Inter',sans-serif] text-[11px] font-bold mt-1">통계</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-400 dark:text-neutral-500 px-4 py-1.5 hover:text-[#1F6F5F] dark:hover:text-[#2a947f] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['Pretendard','Inter',sans-serif] text-[11px] font-medium mt-1">설정</span>
+</a>
+</nav>
+</body></html>
