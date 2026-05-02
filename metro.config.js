@@ -5,13 +5,25 @@ const os = require('os');
 const projectRoot = __dirname;
 const config = getDefaultConfig(projectRoot);
 
-// Prevent Metro from resolving modules from ~/node_modules (global/parent).
-// Without this, Metro crawls up the directory tree and picks up a different
-// react-native version installed at the user's home, which causes codegen errors.
-const homeNodeModules = path.resolve(os.homedir(), 'node_modules');
-const escapedPath = homeNodeModules.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+// ~/node_modules has react-native@0.85.2 but project requires 0.81.5.
+// Block only RN packages from the home directory so Metro doesn't pick up
+// the wrong version, while leaving @expo/cli and metro itself accessible.
+const homeNM = path.resolve(os.homedir(), 'node_modules');
+const e = homeNM.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
 config.resolver.blockList = [
-  new RegExp(`^${escapedPath}/.*`),
+  new RegExp(`^${e}/react-native/.*`),
+  new RegExp(`^${e}/react-native-safe-area-context/.*`),
+  new RegExp(`^${e}/react-native-screens/.*`),
+  new RegExp(`^${e}/@react-native/.*`),
+  new RegExp(`^${e}/@react-native-community/.*`),
+  new RegExp(`^${e}/react/.*`),
+  new RegExp(`^${e}/react-dom/.*`),
+];
+
+// Explicitly prefer project node_modules for all resolutions.
+config.resolver.nodeModulesPaths = [
+  path.resolve(projectRoot, 'node_modules'),
 ];
 
 module.exports = config;
