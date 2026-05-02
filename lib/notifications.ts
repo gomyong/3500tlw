@@ -14,8 +14,10 @@ Notifications.setNotificationHandler({
 export async function requestNotificationPermission(): Promise<boolean> {
   if (Platform.OS === 'android') {
     await Notifications.setNotificationChannelAsync('default', {
-      name: 'default',
-      importance: Notifications.AndroidImportance.DEFAULT,
+      name: '복습 알림',
+      importance: Notifications.AndroidImportance.HIGH,
+      vibrationPattern: [0, 200, 120, 200],
+      sound: 'default',
     });
   }
   const { status } = await Notifications.requestPermissionsAsync();

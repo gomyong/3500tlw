@@ -1,4 +1,4 @@
-import { View, Text, Pressable, StyleSheet, Linking, Alert } from 'react-native';
+import { View, Text, Pressable, StyleSheet, Linking, Alert, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme, Typography, Spacing, Radius } from '../lib/theme';
 
@@ -7,17 +7,20 @@ export default function TerminationScreen() {
   const s = styles(theme);
 
   function handleDelete() {
-    Alert.alert(
-      '앱 삭제하기',
-      'iOS 설정 > 일반 > iPhone 저장 공간에서 앱을 삭제할 수 있습니다.\n또는 홈 화면에서 앱 아이콘을 길게 눌러 삭제하세요.',
-      [
-        { text: '취소', style: 'cancel' },
-        {
-          text: '설정 열기',
-          onPress: () => Linking.openURL('app-settings:'),
+    const message =
+      Platform.OS === 'android'
+        ? '설정 > 앱 > 이 앱 > 제거에서 삭제할 수 있습니다.\n또는 홈 화면/앱 서랍에서 아이콘을 길게 눌러 제거하세요.'
+        : '설정 > 일반 > iPhone 저장 공간에서 앱을 삭제할 수 있습니다.\n또는 홈 화면에서 앱 아이콘을 길게 눌러 삭제하세요.';
+
+    Alert.alert('앱 삭제하기', message, [
+      { text: '닫기', style: 'cancel' },
+      {
+        text: '앱 정보(설정) 열기',
+        onPress: () => {
+          Linking.openSettings();
         },
-      ]
-    );
+      },
+    ]);
   }
 
   return (
