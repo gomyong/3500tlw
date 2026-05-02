@@ -1,0 +1,7 @@
+# Local artifacts (deps install on EAS workers from package-lock.json)
+.expo/
+dist/
+web-build/
+**/.DS_Store
+**/*.log
+/tmp/

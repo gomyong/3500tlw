@@ -7,7 +7,13 @@
     "start:tunnel": "expo start --tunnel",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "eas:login": "eas login",
+    "eas:whoami": "eas whoami",
+    "eas:init": "eas init",
+    "eas:build:ios:preview": "eas build --platform ios --profile preview",
+    "eas:build:ios": "eas build --platform ios --profile production",
+    "eas:submit:ios": "eas submit --platform ios --latest"
   },
   "dependencies": {
     "babel-preset-expo": "~54.0.10",
@@ -26,6 +32,7 @@
   },
   "devDependencies": {
     "@types/react": "~19.1.0",
+    "eas-cli": "^16.28.0",
     "typescript": "~5.9.2"
   },
   "private": true

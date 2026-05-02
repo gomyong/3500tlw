@@ -15,7 +15,8 @@
     },
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.gomyong.3500thelastword"
+      "bundleIdentifier": "com.gomyong.3500thelastword",
+      "buildNumber": "1"
     },
     "android": {
       "adaptiveIcon": {
