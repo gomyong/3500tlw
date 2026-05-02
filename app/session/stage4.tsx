@@ -28,7 +28,7 @@ export default function Stage4Screen() {
           return (
             <View key={w.id} style={[s.card, isDouble && s.cardDouble]}>
               <Text style={[s.wordText, isDouble && s.wordTextDouble]}>
-                {w.word.toUpperCase()}
+                {w.word}
               </Text>
               <View style={s.divider} />
               <Text style={[s.meaningText, isDouble && s.meaningTextDouble]}>

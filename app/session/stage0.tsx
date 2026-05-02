@@ -161,7 +161,6 @@ const styles = (theme: ReturnType<typeof useTheme>) =>
     wordText: {
       ...Typography.displayWord,
       color: theme.text,
-      textTransform: 'uppercase',
     },
     divider: {
       height: 1,

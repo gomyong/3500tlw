@@ -96,7 +96,7 @@ export default function Stage5Screen() {
       <View style={s.cardArea}>
         <View style={s.card}>
           <Text style={s.cardLabel}>학습 단어</Text>
-          <Text style={s.wordText}>{word.word.toUpperCase()}</Text>
+          <Text style={s.wordText}>{word.word}</Text>
         </View>
       </View>
 

@@ -25,7 +25,7 @@ export default function Stage2Screen() {
       <ScrollView style={s.scroll} contentContainerStyle={s.scrollContent}>
         {words.map((w) => (
           <View key={w.id} style={s.card}>
-            <Text style={s.wordText}>{w.word.toUpperCase()}</Text>
+            <Text style={s.wordText}>{w.word}</Text>
             <View style={s.divider} />
             <Text style={s.meaningText}>{w.meaning}</Text>
             {!!w.example && <Text style={s.exampleText}>"{w.example}"</Text>}
