@@ -1,5 +1,7 @@
 import { getDb } from './db';
 
+const CHUNK_SIZE = 200;
+
 export async function seedDatabase(): Promise<void> {
   const db = await getDb();
   const row = await db.getFirstAsync<{ c: number }>('SELECT COUNT(*) as c FROM words');
@@ -10,10 +12,13 @@ export async function seedDatabase(): Promise<void> {
 
   await db.runAsync('BEGIN TRANSACTION');
   try {
-    for (const w of words) {
+    for (let i = 0; i < words.length; i += CHUNK_SIZE) {
+      const chunk = words.slice(i, i + CHUNK_SIZE);
+      const placeholders = chunk.map(() => '(?, ?, ?, ?)').join(',');
+      const params = chunk.flatMap((w) => [w.id, w.word, w.meaning, w.example ?? '']);
       await db.runAsync(
-        'INSERT INTO words (id, word, meaning, example) VALUES (?, ?, ?, ?)',
-        [w.id, w.word, w.meaning, w.example ?? '']
+        `INSERT INTO words (id, word, meaning, example) VALUES ${placeholders}`,
+        params
       );
     }
     await db.runAsync('COMMIT');

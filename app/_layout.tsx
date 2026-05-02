@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, Text } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { initSchema } from '../lib/db';
@@ -26,8 +26,11 @@ export default function RootLayout() {
     return (
       <SafeAreaProvider>
         <StatusBar style="dark" backgroundColor={theme.background} />
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: theme.background }}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: theme.background, paddingHorizontal: 32 }}>
           <ActivityIndicator size="large" color={theme.primary} />
+          <Text style={{ marginTop: 20, fontSize: 15, color: theme.textSecondary, textAlign: 'center' }}>
+            첫 실행 시 단어 데이터를 준비합니다.{'\n'}잠시만 기다려 주세요 (보통 10초 이내).
+          </Text>
         </View>
       </SafeAreaProvider>
     );
